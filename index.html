@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaika Ramzan - Frontend Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --primary: #0A9396;
+            --secondary: #EE9B00;
+            --dark: #001219;
+            --light: #F8F9FA;
+            --text: #2B2D42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            background: rgba(248, 249, 250, .95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(10, 147, 150, .1);
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: .5rem 1.2rem;
+            background: linear-gradient(135deg, var(--primary), #0DB5BA);
+            color: #fff;
+            border-radius: 50px;
+            font-size: .85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        h1 span {
+            color: var(--primary)
+        }
+
+        .hero-description {
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: .8;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #0DB5BA);
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--text);
+            color: var(--text);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .section-header {
+            margin-bottom: 3rem
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-size: .85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+        }
+
+        /* Skills */
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: #ffffff;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .skill-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-label {
+            display: block;
+            color: #555555;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .skills-grid {
+                gap: 1.5rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .skill-image {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+
+        /* Projects */
+        #projects {
+            background: linear-gradient(to bottom, var(--light), rgba(10, 147, 150, .03));
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, .08);
+        }
+
+        .project-header {
+            height: 240px;
+            /* fixed card height */
+            width: 100%;
+            overflow: hidden;
+            border-radius: 18px 18px 0 0;
+            background: #0f172a;
+            /* clean dark background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-header a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* fills area, no gaps */
+            display: block;
+        }
+
+
+
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: .5rem;
+        }
+
+        .project-description {
+            font-size: .9rem;
+            opacity: .8;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+
+        .tag {
+            background: rgba(10, 147, 150, .1);
+            color: var(--primary);
+            padding: .35rem .9rem;
+            border-radius: 20px;
+            font-size: .75rem;
+            font-weight: 600;
+        }
+
+        /* Experience */
+        .experience-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 18px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, .08);
+        }
+
+        /* Education */
+        #education {
+            background: var(--dark);
+            color: white;
+        }
+
+         #education .section-label{
+            color:#F8F9FA;
+         }
+         #education .section-title{
+            color:#F8F9FA;
+         }
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, .05);
+            padding: 2rem;
+            border-radius: 18px;
+        }
+
+
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Two columns */
+            gap: 3rem;
+            /* Space between columns */
+        }
+
+        .contact-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            /* Space between items in the column */
+        }
+
+        .contact-item {
+            background: #ffffff;
+            padding: 1.4rem 1.6rem;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #000000;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            font-size: 1rem;
+            color: #1f2937;
+            word-break: break-word;
+        }
+
+        .contact-footer {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-footer p {
+            margin-bottom: 1rem;
+            color: #555555;
+        }
+
+        .btn.btn-primary {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn.btn-primary:hover {
+            background-color: #333333;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            opacity: .8;
+        }
+
+        /* Responsive */
+        @media(max-width:1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            .projects-grid {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Malaika Ramzan</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div>
+            <span class="hero-label">Frontend Developer</span>
+            <h1>Malaika <span>Ramzan</span></h1>
+            <p class="hero-description">
+                I create responsive, high-performance web applications with clean code and modern UI.
+            </p>
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header">
+            <span class="section-label">My Expertise</span>
+            <h2 class="section-title">Skills</h2>
+        </div>
+
+        <div class="skills-grid">
+            <!-- HTML -->
+            <div class="skill-card">
+                <img src="images/html.png" alt="HTML" class="skill-image">
+                <h3>HTML</h3>
+            </div>
+
+            <!-- CSS -->
+            <div class="skill-card">
+                <img src="images/css.jpg" alt="CSS" class="skill-image">
+                <h3>CSS</h3>
+            </div>
+
+            <!-- Tailwind CSS -->
+            <div class="skill-card">
+                <img src="images/tailwind.png" alt="Tailwind CSS" class="skill-image">
+                <h3>Tailwind CSS</h3>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="skill-card">
+                <img src="images/Js.png" alt="JavaScript" class="skill-image">
+                <h3>JavaScript</h3>
+            </div>
+
+            <!-- Git & GitHub -->
+            <div class="skill-card">
+                <img src="images/github.png" alt="Git & GitHub" class="skill-image">
+                <h3>Git & GitHub</h3>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="projects">
+        <div class="section-header">
+            <span class="section-label">Portfolio</span>
+            <h2 class="section-title">Featured Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <div class="project-header">
+                    <a href=" https://malaikaramzan52.github.io/Task_3/" target="_blank">
+                        <img src="Images/tesla.png" />
+                    </a>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Tesla Homepage Clone</h3>
+                    <p class="project-description">A simple responsive clone of Tesla's homepage using HTML, Tailwind
+                        CSS, and basic JavaScript (for the hero slider).</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Tailwind</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <a href="https://malaikaramzan52.github.io/Currency-Converter/" target="_blank">
+                        <img src="Images/cc.png" />
+                    </a>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Currency Converter</h3>
+                    <p class="project-description">The Currency Converter Web Application is a responsive and
+                        interactive frontend project developed using HTML, CSS, and JavaScript. It allows users to
+                        convert currency values between different countries in real time by fetching accurate exchange
+                        rates from a third-party Currency Exchange API</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span><span class="tag">API</span><span class="tag">CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <a href="https://malaikaramzan52.github.io/Task_4/" target="_blank">
+                        <img src="Images/ppp.png" alt="Phoenix Homepage Clone" />
+                    </a>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Phoenix Homepage Clone</h3>
+                    <p class="project-description">A modern, responsive Admin Dashboard cloned from Phoenix UI. This
+                        dashboard showcases an elegant layout with navigation, widgets, charts, tables, and user
+                        interface components tailored for admin panel functionality.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <a href="https://malaikaramzan52.github.io/Task-Schedular/" target="_blank">
+                        <img src="Images/final.png" alt="Task Scheduler">
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <h3 class="project-title">Task Scheduler</h3>
+                    <p class="project-description">
+                        A simple and interactive Time Scheduler Web App to add, manage and remove tasks
+                        based on priority and deadline using DOM manipulation.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">Tailwind CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-header">
+            <span class="section-label">Career</span>
+            <h2 class="section-title">Work Experience</h2>
+        </div>
+        <div class="experience-card">
+            <h3>Front End Development</h3>
+            <p><strong>Fiesta Digital Solutions</strong></p>
+            <p>
+                Worked on real-world projects and improved frontend skills under mentorship.
+            </p>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="section-header">
+            <span class="section-label">Academic Background</span>
+            <h2 class="section-title">Education</h2>
+        </div>
+        <div class="education-grid">
+            <div class="education-card">
+                <h3>Bachelors in Computer Science</h3>
+                <p>University of Education, Multan</p>
+                <p>CGPA: 3.83 / 4.00</p>
+            </div>
+            <div class="education-card">
+                <h3>Intermediate in Computer Science</h3>
+                <p>Punjab Group of Colleges, Multan</p>
+                <p>88%</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-title">Contact Me</h2>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-column">
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <span class="contact-text">malaikaramzan52@gmail.com</span>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <i class="fa-brands fa-github"></i>
+                    </span>
+                    <a href="https://github.com/malaikaramzan52" target="_blank">
+                        <span class="contact-text">github.com/malaikaramzan52</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-column">
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </span>
+                    <a href="https://www.linkedin.com/in/malaika-ramzan-883923325/" target="_blank">
+                        <span class="contact-text">linkedin.com/in/malaikaramzan52</span>
+                    </a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </span>
+                    <span class="contact-text">Multan, Pakistan</span>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <footer>
+        <p>© 2026 Malaika Ramzan. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
