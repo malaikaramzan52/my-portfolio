@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malaika Ramzan - Frontend Developer</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,11 +79,17 @@
         /* Hero */
         .hero {
             min-height: 100vh;
+            background-image: linear-gradient(rgba(0, 18, 25, 0.55), rgba(0, 18, 25, 0.55)), url('Images/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             padding: 8rem 2rem 4rem;
-            max-width: 1400px;
-            margin: auto;
+            max-width: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            color: white;
         }
 
         .hero-label {
@@ -128,6 +135,11 @@
         .btn-secondary {
             border: 2px solid var(--text);
             color: var(--text);
+        }
+
+        .hero .btn-secondary {
+            border-color: white;
+            color: white;
         }
 
         /* Sections */
@@ -316,137 +328,1105 @@
             box-shadow: 0 4px 25px rgba(0, 0, 0, .08);
         }
 
-        /* Education */
+        /* Education - Timeline Layout */
         #education {
             background: var(--dark);
             color: white;
+            padding: 3.5rem 1.5rem; /* Reduced padding to remove extra space */
+            position: relative;
+            overflow: hidden;
+            max-width: none !important;
+            width: 100% !important;
         }
 
-         #education .section-label{
-            color:#F8F9FA;
-         }
-         #education .section-title{
-            color:#F8F9FA;
-         }
-        .education-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        #education .section-label {
+            color: #F8F9FA;
         }
 
-        .education-card {
-            background: rgba(255, 255, 255, .05);
-            padding: 2rem;
-            border-radius: 18px;
+        #education .section-title {
+            color: #F8F9FA;
         }
 
-
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            /* Two columns */
-            gap: 3rem;
-            /* Space between columns */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto; /* Removed margins */
+            padding: 1rem 0;
         }
 
-        .contact-column {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            /* Space between items in the column */
+        /* Timeline Vertical Spine */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--primary));
+            top: 0;
+            height: 0; /* Animate height from 0% to 100% */
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(10, 147, 150, 0.4);
+            transition: height 1.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .contact-item {
-            background: #ffffff;
-            padding: 1.4rem 1.6rem;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        #education.in-view .timeline-container::after {
+            height: 100%;
+        }
+
+        .timeline-item {
+            padding: 0.6rem 2rem; /* Reduced horizontal & vertical padding to make cards wider */
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+            transform: translateX(-40px); /* Slide in from left */
+        }
+
+        .timeline-item.right {
+            left: 50%;
+            text-align: left;
+            transform: translateX(40px); /* Slide in from right */
+        }
+
+        #education.in-view .timeline-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger transitions */
+        #education.in-view .timeline-item:nth-child(1) {
+            transition-delay: 0.15s;
+        }
+        #education.in-view .timeline-item:nth-child(2) {
+            transition-delay: 0.35s;
+        }
+        #education.in-view .timeline-item:nth-child(3) {
+            transition-delay: 0.55s;
+        }
+
+        /* Timeline dots */
+        .timeline-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--dark);
+            border: 4px solid var(--primary);
+            top: 28px; /* Aligned with the tighter card layout */
+            z-index: 5;
+            box-shadow: 0 0 12px var(--primary);
             transition: all 0.3s ease;
         }
 
-        .contact-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+        .timeline-item.left .timeline-dot {
+            right: -9px;
         }
 
-        .contact-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            background: #000000;
+        .timeline-item.right .timeline-dot {
+            left: -9px;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            border-color: var(--secondary);
+            box-shadow: 0 0 18px var(--secondary);
+            transform: scale(1.2);
+        }
+
+        /* Cards style */
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem; /* Reduced inner padding from 2.2rem to give text more horizontal space */
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            position: relative;
+            text-align: left; /* Ensure text is always left aligned */
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item:hover .timeline-card {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(10, 147, 150, 0.3);
+            box-shadow: 0 12px 30px rgba(10, 147, 150, 0.15);
+        }
+
+        /* Card content details */
+        .timeline-date {
+            display: inline-block;
+            background: rgba(10, 147, 150, 0.15);
+            color: var(--primary);
+            padding: 0.35rem 0.95rem;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(10, 147, 150, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-date {
+            background: rgba(238, 155, 0, 0.15);
+            color: var(--secondary);
+            border-color: rgba(238, 155, 0, 0.2);
+        }
+
+        .timeline-degree {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem; /* Adjusted slightly to optimize space */
             color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .timeline-status, .timeline-gpa {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.6rem;
+        }
+
+        .timeline-status {
+            color: #00ED64;
+            background: rgba(0, 237, 100, 0.1);
+            border: 1px solid rgba(0, 237, 100, 0.15);
+        }
+
+        .timeline-gpa {
+            color: #EE9B00;
+            background: rgba(238, 155, 0, 0.1);
+            border: 1px solid rgba(238, 155, 0, 0.15);
+        }
+
+        .timeline-inst {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.4;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.8rem;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .timeline-item:hover .timeline-tag {
+            background: rgba(10, 147, 150, 0.15);
+            color: var(--primary);
+            border-color: rgba(10, 147, 150, 0.25);
+        }
+
+
+        /* Certificates Section */
+        #certificates {
+            background: var(--dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: none !important;
+            width: 100% !important;
+            padding: 6rem 2rem;
+        }
+
+        #certificates .section-title {
+            color: #ffffff;
+        }
+
+        #certificates .section-label {
+            color: var(--primary);
+        }
+
+        .certificates-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .certificate-card {
+            background: #14171A;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(10, 147, 150, 0.25);
+            border-color: rgba(10, 147, 150, 0.3);
+        }
+
+        .cert-icon-container {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.6rem;
             flex-shrink: 0;
         }
 
-        .contact-text {
-            font-size: 1rem;
-            color: #1f2937;
-            word-break: break-word;
+        .cert-icon-container.purple {
+            background: rgba(79, 70, 229, 0.15);
+            color: #a5b4fc;
         }
 
-        .contact-footer {
-            margin-top: 3rem;
-            text-align: center;
+        .cert-icon-container.green {
+            background: rgba(5, 150, 105, 0.15);
+            color: #6ee7b7;
         }
 
-        .contact-footer h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+        .cert-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            text-align: left;
         }
 
-        .contact-footer p {
-            margin-bottom: 1rem;
-            color: #555555;
+        .cert-org {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
         }
 
-        .btn.btn-primary {
-            background-color: #000000;
+        .cert-title {
+            font-size: 1.25rem;
+            font-weight: 700;
             color: #ffffff;
-            padding: 0.8rem 1.6rem;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .cert-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.2rem;
+        }
+
+        .cert-date {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cert-date i {
+            font-size: 0.9rem;
+        }
+
+        .cert-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .cert-badge.purple {
+            background: rgba(79, 70, 229, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+
+        .cert-badge.green {
+            background: rgba(5, 150, 105, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(5, 150, 105, 0.2);
+        }
+
+        .cert-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .btn-cert {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.2s ease;
+            font-family: 'DM Sans', sans-serif;
         }
 
-        .btn.btn-primary:hover {
-            background-color: #333333;
+        .btn-cert:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.35);
+            color: #ffffff;
         }
 
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
+        .cert-id {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Responsive Certificates */
+        @media (max-width: 768px) {
+            .certificate-card {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+                padding: 1.5rem;
+                text-align: center;
+            }
+            
+            .cert-icon-container {
+                margin: 0 auto;
+            }
+            
+            .cert-info {
+                align-items: center;
+                text-align: center;
+            }
+            
+            .cert-meta {
+                justify-content: center;
+            }
+            
+            .cert-actions {
+                align-items: center;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            
+            .btn-cert {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Timeline Responsiveness */
+        @media (max-width: 768px) {
+            .timeline-container::after {
+                left: 21px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 3.5rem; /* Reduced mobile padding to maximize card width */
+                padding-right: 1rem;
+                text-align: left !important;
+            }
+
+            .timeline-item.left {
+                transform: translateX(40px); /* Slide in from right on mobile */
+            }
+
+            .timeline-item.right {
+                left: 0%;
+            }
+
+            .timeline-item.left .timeline-dot,
+            .timeline-item.right .timeline-dot {
+                left: 12px;
+                right: auto;
+            }
+        }
+
+
+
+        /* Contact Details & Premium Stacked Form Styling */
+        #contact {
+            background: var(--dark); /* Same as the whole web */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: none !important;
+            width: 100% !important;
+            padding: 6rem 2rem;
+        }
+
+        #contact .section-title {
+            color: #ffffff;
+        }
+
+        #contact .section-label {
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
             text-align: center;
+        }
+
+        .contact-container {
+            max-width: 800px; /* Centered, neat container width */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Connect Grid */
+        .connect-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .connect-item {
+            background: #14171A; /* Consistent card background */
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .connect-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(10, 147, 150, 0.2);
+            border-color: rgba(10, 147, 150, 0.3);
+        }
+
+        .connect-item.cursor-default {
+            cursor: default;
+        }
+
+        .connect-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .connect-icon.github {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .connect-icon.linkedin {
+            background: rgba(10, 147, 150, 0.15);
+            color: var(--primary);
+        }
+
+        .connect-icon.email {
+            background: rgba(0, 237, 100, 0.1);
+            color: #00ED64;
+        }
+
+        .connect-icon.location {
+            background: rgba(238, 155, 0, 0.1);
+            color: var(--secondary);
+        }
+
+        .connect-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .connect-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .connect-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            word-break: break-all;
+        }
+
+        /* Contact Divider */
+        .contact-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .contact-divider::before,
+        .contact-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-divider::before {
+            margin-right: 1.5rem;
+        }
+
+        .contact-divider::after {
+            margin-left: 1.5rem;
+        }
+
+        .contact-divider span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Form Card */
+        .contact-form-card {
+            background: #14171A; /* Matching whole web card style */
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+
+        .form-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .form-card-header i {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .form-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .contact-form-new {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group-new {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            text-align: left;
+        }
+
+        .form-group-new label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control-new {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 0.9rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-control-new:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 0 3px rgba(10, 147, 150, 0.2);
+        }
+
+        .form-control-new::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Submit Button */
+        .btn-submit-new {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-submit-new:hover {
+            background: #0db5ba;
+            box-shadow: 0 8px 25px rgba(10, 147, 150, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit-new:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Mobile Responsiveness for Form/Connect */
+        @media (max-width: 768px) {
+            .connect-wrapper {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .form-row-two {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .contact-form-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Certificate Detail Modal Styles */
+        .cert-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 18, 25, 0.82);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 2rem;
-            opacity: .8;
         }
 
-        /* Responsive */
-        @media(max-width:1024px) {
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr)
+        .cert-modal-window {
+            position: relative;
+            background: #14171A; /* Sleek card background matching terminal window */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 760px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(10, 147, 150, 0.25);
+            overflow: hidden;
+        }
+
+        .cert-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            outline: none;
+        }
+
+        .cert-modal-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: rotate(90deg);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .cert-modal-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: stretch;
+        }
+
+        .cert-modal-image-container {
+            background: #0b0d0f; /* Pitch dark backing for document contrast */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.2rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cert-modal-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s ease;
+        }
+
+        .cert-modal-img:hover {
+            transform: scale(1.02);
+        }
+
+        .cert-modal-info {
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+        }
+
+        .cert-modal-org {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .cert-modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .cert-modal-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 1.4rem;
+        }
+
+        .cert-modal-date {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .cert-modal-date i {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .cert-modal-id {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.76rem;
+        }
+
+        .cert-modal-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 1.2rem;
+        }
+
+        .cert-modal-desc {
+            text-align: left;
+        }
+
+        .cert-modal-desc h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+
+        .cert-modal-desc p {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* Modal Open Animation */
+        .animate-modal-zoom {
+            animation: modalZoom 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes modalZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
             }
         }
 
-        @media(max-width:600px) {
+        /* Footer Styling */
+        .footer-professional {
+            background: #000c11; /* Slightly darker than var(--dark) for section nesting depth */
+            color: white;
+            padding: 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-brand .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-brand .logo-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.04);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .footer-brand .logo-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-location {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .footer-location i {
+            color: var(--secondary); /* Warn gold location pin */
+            font-size: 1rem;
+        }
+
+        .footer-copyright {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-copyright p {
+            margin: 0;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .footer-socials a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            color: #ffffff;
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 147, 150, 0.3);
+        }
+
+        /* Responsive Overrides */
+        @media(max-width: 1024px) {
             .projects-grid {
-                grid-template-columns: 1fr
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-blue-band {
+                padding: 0.8rem 1.5rem;
+            }
+            .header-nav.scrolled .nav-blue-band {
+                padding: 0.5rem 1.5rem;
+            }
+            .header-top-right {
+                padding: 0.3rem 1.5rem 0.3rem 0;
+            }
+            section, .skills-visualizer-section, .about-section, #certificates, #contact {
+                padding: 4rem 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+            .glowing-ring {
+                width: 280px;
+                height: 280px;
+            }
+            .image-card {
+                width: 240px;
+                height: 240px;
+            }
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.2rem;
+                flex-wrap: wrap;
+            }
+            .footer-brand .logo-text {
+                text-align: center;
+            }
+            .footer-socials {
+                justify-content: center;
             }
 
-            .nav-links {
-                display: none
+            /* Modal Responsive Styling */
+            .cert-modal-overlay {
+                padding: 1rem;
             }
+            .cert-modal-window {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            .cert-modal-grid {
+                grid-template-columns: 1fr;
+            }
+            .cert-modal-image-container {
+                padding: 2.8rem 1.5rem 1rem 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .cert-modal-info {
+                padding: 1.5rem;
+            }
+            .cert-modal-title {
+                font-size: 1.32rem;
+            }
+        }
 
-            .contact-content {
-                grid-template-columns: 1fr
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glowing-ring {
+                width: 220px;
+                height: 220px;
+            }
+            .image-card {
+                width: 180px;
+                height: 180px;
             }
         }
     </style>
@@ -461,7 +1441,6 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
                 <li><a href="#education">Education</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -606,89 +1585,360 @@
         </div>
     </section>
 
-    <section id="experience">
-        <div class="section-header">
-            <span class="section-label">Career</span>
-            <h2 class="section-title">Work Experience</h2>
-        </div>
-        <div class="experience-card">
-            <h3>Front End Development</h3>
-            <p><strong>Fiesta Digital Solutions</strong></p>
-            <p>
-                Worked on real-world projects and improved frontend skills under mentorship.
-            </p>
-        </div>
-    </section>
-
     <section id="education">
         <div class="section-header">
             <span class="section-label">Academic Background</span>
             <h2 class="section-title">Education</h2>
         </div>
-        <div class="education-grid">
-            <div class="education-card">
-                <h3>Bachelors in Computer Science</h3>
-                <p>University of Education, Multan</p>
-                <p>CGPA: 3.83 / 4.00</p>
+        
+        <div class="timeline-container">
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <span class="timeline-date">2022 - 2026</span>
+                    <h3 class="timeline-degree">BS in Computer Science</h3>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+                        <span class="timeline-status">Completed</span>
+                        <span class="timeline-gpa">CGPA: 3.83/4.00</span>
+                    </div>
+                    <p class="timeline-inst">University of Education Lahore, Multan Campus</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Computer Science</span>
+                        <span class="timeline-tag">Database Systems</span>
+                        <span class="timeline-tag">Web Development</span>
+                        <span class="timeline-tag">Software Engineering</span>
+                    </div>
+                </div>
             </div>
-            <div class="education-card">
-                <h3>Intermediate in Computer Science</h3>
-                <p>Punjab Group of Colleges, Multan</p>
-                <p>88%</p>
+
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <span class="timeline-date">2020 - 2022</span>
+                    <h3 class="timeline-degree">Intermediate in Computer Science</h3>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+                        <span class="timeline-status">Completed</span>
+                        <span class="timeline-gpa">Marks: 968/1100</span>
+                    </div>
+                    <p class="timeline-inst">Punjab Group of Colleges, Multan</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Computer Science</span>
+                        <span class="timeline-tag">Mathematics</span>
+                        <span class="timeline-tag">Physics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <span class="timeline-date">2018 - 2020</span>
+                    <h3 class="timeline-degree">Matriculation in Science</h3>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+                        <span class="timeline-status">Completed</span>
+                        <span class="timeline-gpa">Marks: 948/1100</span>
+                    </div>
+                    <p class="timeline-inst">Sun Model Higher Secondary School, Multan</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Science</span>
+                        <span class="timeline-tag">Computer Science</span>
+                        <span class="timeline-tag">Mathematics</span>
+                        <span class="timeline-tag">Physics</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates">
+        <div class="section-header">
+            <span class="section-label">Valued Credentials</span>
+            <h2 class="section-title">Certificates</h2>
+        </div>
+
+        <div class="certificates-container">
+            <!-- Certificate 1: Frontend Developer -->
+            <div class="certificate-card">
+                <div class="cert-icon-container purple">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="cert-info">
+                    <span class="cert-org">Fiesta Digital Solutions</span>
+                    <h3 class="cert-title">Frontend Developer</h3>
+                    <div class="cert-meta">
+                        <span class="cert-date">
+                            <i class="fa-regular fa-calendar-days"></i> Issued: 17-11-2025
+                        </span>
+                        <span class="cert-badge purple">Frontend Dev</span>
+                    </div>
+                </div>
+                <div class="cert-actions">
+                    <button class="btn-cert" onclick="openCertModal('cert-1')">
+                        View credential <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Certificate 2: Microsoft Office Specialist -->
+            <div class="certificate-card">
+                <div class="cert-icon-container green">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div class="cert-info">
+                    <span class="cert-org">Office Word 2016</span>
+                    <h3 class="cert-title">Microsoft Office Specialist</h3>
+                    <div class="cert-meta">
+                        <span class="cert-date">
+                            <i class="fa-regular fa-calendar-days"></i> Issued: 14-01-2021
+                        </span>
+                        <span class="cert-badge green">MOS Word</span>
+                    </div>
+                </div>
+                <div class="cert-actions">
+                    <button class="btn-cert" onclick="openCertModal('cert-2')">
+                        View credential <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact">
         <div class="section-header">
             <span class="section-label">Get In Touch</span>
             <h2 class="section-title">Contact Me</h2>
+            <p class="section-subtitle">Open to opportunities, collaborations, or just a friendly hello.</p>
         </div>
 
-        <div class="contact-content">
-            <div class="contact-column">
-                <div class="contact-item">
-                    <span class="contact-icon">
-                        <i class="fa-solid fa-envelope"></i>
-                    </span>
-                    <span class="contact-text">malaikaramzan52@gmail.com</span>
-                </div>
+        <div class="contact-container">
+            <!-- Part 1: Connect with me (simple list of icons + text, no enclosing giant card) -->
+            <div class="connect-wrapper">
+                <a href="https://github.com/malaikaramzan52" target="_blank" rel="noopener noreferrer" class="connect-item">
+                    <span class="connect-icon github"><i class="fa-brands fa-github"></i></span>
+                    <div class="connect-details">
+                        <span class="connect-label">GitHub</span>
+                        <span class="connect-text">malaikaramzan52</span>
+                    </div>
+                </a>
 
-                <div class="contact-item">
-                    <span class="contact-icon">
-                        <i class="fa-brands fa-github"></i>
-                    </span>
-                    <a href="https://github.com/malaikaramzan52" target="_blank">
-                        <span class="contact-text">github.com/malaikaramzan52</span>
-                    </a>
+                <a href="https://www.linkedin.com/in/malaika-ramzan-883923325/" target="_blank" rel="noopener noreferrer" class="connect-item">
+                    <span class="connect-icon linkedin"><i class="fa-brands fa-linkedin-in"></i></span>
+                    <div class="connect-details">
+                        <span class="connect-label">LinkedIn</span>
+                        <span class="connect-text">malaikaramzan52</span>
+                    </div>
+                </a>
+
+                <a href="mailto:malaikaramzan52@gmail.com" class="connect-item">
+                    <span class="connect-icon email"><i class="fa-solid fa-envelope"></i></span>
+                    <div class="connect-details">
+                        <span class="connect-label">Email</span>
+                        <span class="connect-text">malaikaramzan52@gmail.com</span>
+                    </div>
+                </a>
+
+                <div class="connect-item cursor-default">
+                    <span class="connect-icon location"><i class="fa-solid fa-location-dot"></i></span>
+                    <div class="connect-details">
+                        <span class="connect-label">Location</span>
+                        <span class="connect-text">Multan, Pakistan</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="contact-column">
-                <div class="contact-item">
-                    <span class="contact-icon">
-                        <i class="fa-brands fa-linkedin"></i>
-                    </span>
-                    <a href="https://www.linkedin.com/in/malaika-ramzan-883923325/" target="_blank">
-                        <span class="contact-text">linkedin.com/in/malaikaramzan52</span>
-                    </a>
+            <!-- Divider Line -->
+            <div class="contact-divider">
+                <span>or send a message</span>
+            </div>
+
+            <!-- Part 2: Send a message Form Card -->
+            <div class="contact-form-card">
+                <div class="form-card-header">
+                    <i class="fa-regular fa-comment-dots"></i>
+                    <h3>Send a message</h3>
                 </div>
 
-                <div class="contact-item">
-                    <span class="contact-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </span>
-                    <span class="contact-text">Multan, Pakistan</span>
-                </div>
+                <form class="contact-form-new" onsubmit="event.preventDefault(); alert('Message sent!');">
+                    <div class="form-row-two">
+                        <div class="form-group-new">
+                            <label for="name">Full name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-control-new" 
+                                placeholder="Your Name" 
+                                required 
+                            />
+                        </div>
+
+                        <div class="form-group-new">
+                            <label for="email">Email address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-control-new" 
+                                placeholder="yourname@gmail.com" 
+                                required 
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group-new">
+                        <label for="message">Message</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            rows="5" 
+                            class="form-control-new" 
+                            placeholder="How can I help you?" 
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="btn-submit-new" 
+                    >
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Send message
+                    </button>
+                </form>
             </div>
         </div>
-
-
     </section>
 
-    <footer>
-        <p>© 2026 Malaika Ramzan. All rights reserved.</p>
+    <footer class="footer-professional">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="logo-container">
+                    <span class="logo-icon"><i class="fa-solid fa-code"></i></span>
+                    <div class="logo-text">
+                        Malaika Ramzan
+                        <span class="logo-sub">MERN Stack Developer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <p>© 2026 Malaika Ramzan. All rights reserved.</p>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://maps.google.com/?q=Multan,Pakistan" target="_blank" rel="noopener noreferrer" title="Multan, Pakistan"><i class="fa-solid fa-location-dot"></i></a>
+                <a href="https://github.com/malaikaramzan52" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/malaika-ramzan-883923325/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="mailto:malaikaramzan52@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
     </footer>
 
+    <!-- Certificate Detail Modal -->
+    <div id="certModal" class="cert-modal-overlay" style="display: none;">
+        <div class="cert-modal-window animate-modal-zoom">
+            <button class="cert-modal-close" id="closeCertModal" title="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="cert-modal-grid">
+                <div class="cert-modal-image-container">
+                    <img id="modalCertImage" src="" alt="Certificate" class="cert-modal-img" />
+                </div>
+                <div class="cert-modal-info">
+                    <span id="modalCertOrg" class="cert-modal-org"></span>
+                    <h3 id="modalCertTitle" class="cert-modal-title"></h3>
+                    
+                    <div class="cert-modal-meta">
+                        <span class="cert-modal-date">
+                            <i class="fa-regular fa-calendar-days"></i> <span id="modalCertDate"></span>
+                        </span>
+                    </div>
+                    
+                    <hr class="cert-modal-divider" />
+                    
+                    <div class="cert-modal-desc">
+                        <h4>Description</h4>
+                        <p id="modalCertDesc"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const certsData = {
+            'cert-1': {
+                title: "Frontend Developer",
+                org: "Fiesta Digital Solutions",
+                date: "Issued: 17-11-2025",
+                image: "Images/Forntend.jpeg",
+                desc: "Intensive frontend development credential covering HTML5, CSS3, modern JavaScript ES6+, responsive layout engineering, and building dynamic UI components. Handled real-world client briefs and digital solutions."
+            },
+            'cert-2': {
+                title: "Microsoft Office Specialist",
+                org: "Office Word 2016",
+                date: "Issued: 14-01-2021",
+                image: "Images/Word.jpeg",
+                desc: "Official certification proving professional-level competence in formatting, layout structuring, references, tables, template generation, and advanced processing tools of Microsoft Word 2016."
+            }
+        };
+
+        const modal = document.getElementById('certModal');
+        const closeModalBtn = document.getElementById('closeCertModal');
+        const modalImg = document.getElementById('modalCertImage');
+        const modalOrg = document.getElementById('modalCertOrg');
+        const modalTitle = document.getElementById('modalCertTitle');
+        const modalDate = document.getElementById('modalCertDate');
+        const modalDesc = document.getElementById('modalCertDesc');
+
+        function openCertModal(certId) {
+            const data = certsData[certId];
+            if (!data) return;
+
+            modalImg.src = data.image;
+            modalImg.alt = data.title;
+            modalOrg.textContent = data.org;
+            modalTitle.textContent = data.title;
+            modalDate.textContent = data.date;
+            modalDesc.textContent = data.desc;
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeCertModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        closeModalBtn.addEventListener('click', closeCertModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeCertModal();
+            }
+        });
+
+        // ESC Key listener
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeCertModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            const educationSec = document.getElementById('education');
+            if (educationSec) observer.observe(educationSec);
+        });
+    </script>
 </body>
 
 </html>
