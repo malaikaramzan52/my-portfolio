@@ -12,17 +12,18 @@ const defaultSkills = [
 ];
 
 // @route   GET /api/skills
-// @desc    Get all skills (seeds if database is empty)
+// @desc    Get all skills (seeds if database is empty, fallbacks if database error)
 router.get('/', async (req, res) => {
     try {
-        let skills = await Skill.find();
+        let skills = await Skill.find().maxTimeMS(3000); // 3 seconds timeout
         if (skills.length === 0) {
             console.log("Seeding default skills in database...");
             skills = await Skill.insertMany(defaultSkills);
         }
         res.json(skills);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Database error in GET /api/skills, falling back to local data:", error.message);
+        res.json(defaultSkills);
     }
 });
 

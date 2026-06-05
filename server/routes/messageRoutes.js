@@ -14,8 +14,15 @@ router.post('/', async (req, res) => {
 
     try {
         // 1. Save to Database
-        const newMessage = new Message({ name, email, message });
-        const savedMessage = await newMessage.save();
+        let savedMessage = null;
+        let dbError = '';
+        try {
+            const newMessage = new Message({ name, email, message });
+            savedMessage = await newMessage.save();
+        } catch (dbErr) {
+            console.error("Database Save Error:", dbErr.message);
+            dbError = `Database save failed: ${dbErr.message}. `;
+        }
 
         let emailSentSuccessfully = false;
         let emailError = '';
@@ -59,17 +66,24 @@ router.post('/', async (req, res) => {
                 emailSentSuccessfully = true;
             } catch (err) {
                 console.error("Nodemailer Error:", err.message);
-                emailError = `Email delivery failed: ${err.message}. But your message was saved to our database!`;
+                emailError = `Email delivery failed: ${err.message}.`;
             }
         } else {
-            emailError = "Email service not configured (email credentials are placeholders). Message was saved to the database successfully!";
+            emailError = "Email service not configured (email credentials are placeholders).";
+        }
+
+        // If both failed, return 500
+        if (!savedMessage && !emailSentSuccessfully) {
+            return res.status(500).json({ 
+                message: `Failed to process message. ${dbError}${emailError}`.trim()
+            });
         }
 
         res.status(201).json({
-            message: "Message received successfully!",
+            message: "Message received!",
             data: savedMessage,
             emailSent: emailSentSuccessfully,
-            warning: emailSentSuccessfully ? null : emailError
+            warning: dbError || (emailSentSuccessfully ? null : emailError)
         });
 
     } catch (error) {

@@ -39,17 +39,18 @@ const defaultProjects = [
 ];
 
 // @route   GET /api/projects
-// @desc    Get all projects (seeds if database is empty)
+// @desc    Get all projects (seeds if database is empty, fallbacks if database error)
 router.get('/', async (req, res) => {
     try {
-        let projects = await Project.find();
+        let projects = await Project.find().maxTimeMS(3000); // 3 seconds timeout
         if (projects.length === 0) {
             console.log("Seeding default projects in database...");
             projects = await Project.insertMany(defaultProjects);
         }
         res.json(projects);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Database error in GET /api/projects, falling back to local data:", error.message);
+        res.json(defaultProjects);
     }
 });
 
