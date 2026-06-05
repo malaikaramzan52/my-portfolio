@@ -6,7 +6,7 @@ import SkillsVisualizer from './components/SkillsVisualizer';
 import frontendCert from './assets/Forntend.jpeg';
 import wordCert from './assets/Word.jpeg';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 // Fallback data in case the server is offline or loading
 const fallbackProjects = [
