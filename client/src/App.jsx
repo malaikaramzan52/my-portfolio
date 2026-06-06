@@ -195,12 +195,11 @@ function App() {
             const result = await response.json();
 
             if (response.ok) {
-                let successMessage = "Thank you! Your message has been received.";
                 if (result.warning) {
-                    successMessage += ` (${result.warning})`;
-                } else if (result.emailSent) {
-                    successMessage += " An email notification was also successfully sent.";
+                    console.warn("Backend warning:", result.warning);
                 }
+                
+                let successMessage = "Thank you! Your message has been sent successfully.";
                 
                 setFormStatus({
                     type: 'success',
