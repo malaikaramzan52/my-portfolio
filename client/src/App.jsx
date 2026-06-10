@@ -199,7 +199,7 @@ function App() {
                     console.warn("Backend warning:", result.warning);
                 }
                 
-                let successMessage = "Thank you! Your message has been sent successfully.";
+                let successMessage = "Thank you! Your message has been received.";
                 
                 setFormStatus({
                     type: 'success',
