@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ]
+  ],
+  "env": {
+    "MONGO_URI": "mongodb+srv://malaikaramzan52:rebook9988@cluster0.6e7x6v3.mongodb.net/portfolio?retryWrites=true&w=majority",
+    "EMAIL_USER": "malaikaramzan52@gmail.com",
+    "EMAIL_PASS": "dbivvgkclkxtnnwk",
+    "RECEIVER_EMAIL": "malaikaramzan52@gmail.com"
+  }
 }
